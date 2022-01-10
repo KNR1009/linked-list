@@ -26,28 +26,28 @@ class SinglyLinkedList {
     }
     return iterator;
   }
+  // ノードデータを出力
+  printList() {
+    let iterator = this.head;
+    let str = "";
+    while (iterator !== null) {
+      str += iterator.data + " ";
+      iterator = iterator.next;
+    }
+    console.log(str);
+  }
 }
 
 const numList = new SinglyLinkedList([
   35, 23, 546, 67, 86, 234, 56, 767, 34, 1, 98, 78, 555,
 ]);
-console.log(numList.at(2));
-// class SinglyLinkedList {
-//   constructor(node) {
-//     // 初期値
-//     this.head = node;
-//   }
-// }
+numList.printList();
 
-// let arr = [35, 23, 546, 67, 86, 234, 56, 767, 34, 1, 98, 78, 555];
-// let node1 = new Node(arr[0]);
-// let node2 = new Node(arr[1]);
-// let numList = new SinglyLinkedList(node1);
+// indexの2と3の間に40を挿入する
+let thirdEle = numList.at(2);
+let tempNode = thirdEle.next;
+let newNode = new Node(40);
+thirdEle.next = newNode;
+newNode.next = tempNode;
 
-// let currentNode = numList.head;
-// for (let i = 1; i < arr.length; i++) {
-//   currentNode.next = new Node(arr[i]);
-//   currentNode = currentNode.next;
-// }
-
-// console.log(numList);
+numList.printList();
