@@ -49,8 +49,21 @@ class DoublyLinkedList {
     }
     return iterator;
   }
+
+  // 反対から出力する
+  printInReserve() {
+    let iterator = this.tail;
+    let str = "";
+    while (iterator !== null) {
+      str += iterator.data + " ";
+      iterator = iterator.prev;
+    }
+    return str;
+  }
 }
 
 let numList = new DoublyLinkedList([
   35, 23, 546, 67, 86, 234, 56, 767, 34, 1, 98, 78, 555,
 ]);
+
+console.log(numList.printInReserve());
