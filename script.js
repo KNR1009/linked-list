@@ -1,62 +1,56 @@
 class Node {
+  // 前後を追跡します。
   constructor(data) {
     this.data = data;
+    this.prev = null;
     this.next = null;
   }
 }
 
-class SinglyLinkedList {
+// リストは少なくとも1つのノードを持っている必要があります。
+// ヌルリストをサポートしたい場合は、それに応じてコードを追加してください。
+class DoublyLinkedList {
   constructor(arr) {
+    // 今回は末尾を追跡します。
+    if (arr.length <= 0) {
+      this.head = new Node(null);
+      this.tail = this.head;
+      return;
+    }
+
     this.head = new Node(arr[0]);
     let currentNode = this.head;
     for (let i = 1; i < arr.length; i++) {
       currentNode.next = new Node(arr[i]);
+      // 次のノードの前のノードをcurrent Nodeに割り当てます。
+      currentNode.next.prev = currentNode;
       currentNode = currentNode.next;
     }
+
+    // このcurrent Nodeは最後のnodeです。
+    this.tail = currentNode;
   }
 
-  // 先頭に受け取ったノードを追加する
-  preAppend(newNode) {
-    newNode.next = this.head;
-    this.head = newNode;
+  printList() {
+    let iterator = this.head;
+    let str = "";
+    while (iterator != null) {
+      str += iterator.data + " ";
+      iterator = iterator.next;
+    }
+    console.log(str);
   }
 
-  // ノードの参照
   at(index) {
     let iterator = this.head;
-
-    // indexまでループ
     for (let i = 0; i < index; i++) {
       iterator = iterator.next;
       if (iterator === null) return null;
     }
     return iterator;
   }
-  printList() {
-    let iterator = this.head;
-    let str = "";
-
-    // ポイントがnullになるまでループ
-    while (iterator !== null) {
-      str += iterator.data + " ";
-      iterator = iterator.next;
-    }
-    return str;
-  }
 }
 
-let numList = new SinglyLinkedList([1, 2, 3, 6, 8, 10]);
-console.log(numList.printList());
-
-numList.preAppend(new Node(20));
-
-console.log(numList.printList());
-
-// 2と3番目の間に40を挿入する
-let thirdEl = numList.at(2);
-// 2番目以降の連結リストを保存
-let tempNode = thirdEl.next;
-// 追加するノードをインスタンス化
-let newNode = new Node(40);
-newNode.next = tempNode;
-thirdEl.next = newNode;
+let numList = new DoublyLinkedList([
+  35, 23, 546, 67, 86, 234, 56, 767, 34, 1, 98, 78, 555,
+]);
