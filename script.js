@@ -42,6 +42,21 @@ class DoublyLinkedList {
     return iterator;
   }
 
+  // 先頭に追加
+  preAppend(newNode) {
+    this.head.prev = newNode;
+    newNode.next = this.head;
+    newNode.prev = null;
+    this.head = newNode;
+  }
+  // リストの最後に追加
+  append(newNode) {
+    this.tail.next = newNode;
+    newNode.prev = this.tail;
+    newNode.next = null;
+    this.tail = newNode;
+  }
+
   printInReverse() {
     let iterator = this.tail;
     let str = "";
@@ -51,7 +66,23 @@ class DoublyLinkedList {
     }
     console.log(str);
   }
+  reverse() {
+    let reverse = this.tail;
+    let iterator = this.tail.prev;
+    let currentNode = reverse;
+    console.log(reverse);
+
+    while (iterator !== null) {
+      currentNode.next = iterator;
+      iterator = iterator.prev;
+
+      currentNode.next.prev = currentNode;
+      currentNode = currentNode.next;
+    }
+  }
 }
 
 const t = new DoublyLinkedList([1, 2, 3, 4, 5]);
-t.printInReverse();
+
+t.append(new Node(22));
+console.log(t);
