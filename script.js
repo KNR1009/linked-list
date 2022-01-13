@@ -17,7 +17,7 @@ class DoublyLinkedList {
       currentNode.next.prev = currentNode;
       currentNode = currentNode.next;
     }
-
+    // 末尾s
     this.tail = currentNode;
   }
 
@@ -30,6 +30,28 @@ class DoublyLinkedList {
     }
     console.log(str);
   }
+
+  // データ検索
+  at(index) {
+    // クラスで初期化した値
+    let iterator = this.head;
+    for (let i = 0; i < index; i++) {
+      iterator = iterator.next;
+      if (iterator === null) return null;
+    }
+    return iterator;
+  }
+
+  printInReverse() {
+    let iterator = this.tail;
+    let str = "";
+    while (iterator !== null) {
+      str += iterator.data + " ";
+      iterator = iterator.prev;
+    }
+    console.log(str);
+  }
 }
 
-const t = new DoublyLinkedList([1, 2, 3, 4]);
+const t = new DoublyLinkedList([1, 2, 3, 4, 5]);
+t.printInReverse();
