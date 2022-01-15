@@ -50,7 +50,7 @@ const t = new Queue();
 t.enqueue(1);
 t.enqueue(2);
 t.enqueue(3);
-// t.enqueue(3);
-// t.enqueue(4);
+t.dequeue();
+t.dequeue();
 
 console.log(t);
