@@ -22,14 +22,14 @@ class Queue {
   }
 
   enqueue(data) {
-    if (this.head === null) {
+    if (this.head == null) {
       this.head = new Node(data);
-    } else if (this.tail === null) {
+    } else if (this.tail == null) {
       this.tail = new Node(data);
       this.head.next = this.tail;
     } else {
       this.tail.next = new Node(data);
-      this.tail = new Node(data);
+      this.tail = this.tail.next;
     }
   }
 
@@ -46,11 +46,22 @@ class Queue {
   }
 }
 
-const t = new Queue();
-t.enqueue(1);
-t.enqueue(2);
-t.enqueue(3);
-// t.enqueue(3);
-// t.enqueue(4);
+let q = new Queue();
+console.log(q.peekFront());
+console.log(q.peekBack());
 
-console.log(t);
+q.enqueue(4);
+console.log(q.peekFront());
+console.log(q.peekBack());
+
+q.enqueue(50);
+console.log(q.peekFront());
+console.log(q.peekBack());
+
+q.enqueue(64);
+console.log(q.peekFront());
+console.log(q.peekBack());
+
+console.log("dequeued :" + q.dequeue());
+console.log(q.peekFront());
+console.log(q.peekBack());
