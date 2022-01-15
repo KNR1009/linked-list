@@ -17,7 +17,7 @@ class DoublyLinkedList {
       currentNode.next.prev = currentNode;
       currentNode = currentNode.next;
     }
-    // 末尾s
+    // 末尾
     this.tail = currentNode;
   }
 
@@ -44,17 +44,31 @@ class DoublyLinkedList {
 
   // 先頭に追加
   preAppend(newNode) {
-    this.head.prev = newNode;
-    newNode.next = this.head;
     newNode.prev = null;
+    newNode.next = this.head;
+    this.head.prev = newNode;
     this.head = newNode;
   }
-  // リストの最後に追加
-  append(newNode) {
-    this.tail.next = newNode;
+
+  // 末尾に追加
+  tailAppend(newNode) {
     newNode.prev = this.tail;
     newNode.next = null;
-    this.tail = newNode;
+    this.tail.next = newNode;
+  }
+  // nodeの次に追加する
+  // 具体的なnodeが入ってきているので、O(1)
+  addNextNode(node, newNode) {
+    newNode.next = node.next;
+    newNode.prev = node;
+    node.next = newNode;
+
+    // 与えられたノードが末尾の場合
+    // if(node = this.tail) {
+    //   this.tail = newNode
+    // }else{
+
+    // }
   }
 
   printInReverse() {
@@ -83,6 +97,3 @@ class DoublyLinkedList {
 }
 
 const t = new DoublyLinkedList([1, 2, 3, 4, 5]);
-
-t.append(new Node(22));
-console.log(t);
