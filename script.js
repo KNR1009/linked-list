@@ -62,14 +62,33 @@ class DoublyLinkedList {
     newNode.next = node.next;
     newNode.prev = node;
     node.next = newNode;
-
-    // 与えられたノードが末尾の場合
-    // if(node = this.tail) {
-    //   this.tail = newNode
-    // }else{
-
-    // }
   }
+
+  // リストの先頭を削除
+  popFront() {
+    this.head = this.head.next;
+    this.head.prev = null;
+  }
+
+  // リストの末端を削除
+  popTail() {
+    this.tail = this.tail.prev;
+    this.tail.next = null;
+  }
+
+  deleteNode(node) {
+    if (node === this.tail) {
+      this.pop();
+    }
+
+    if (node === this.head) {
+      this.popFront();
+    }
+    node.prev.next = node.next;
+    node.next.prev = node.prev;
+  }
+
+  // 与えられたnodeの削除(O(1))
 
   printInReverse() {
     let iterator = this.tail;
@@ -97,3 +116,5 @@ class DoublyLinkedList {
 }
 
 const t = new DoublyLinkedList([1, 2, 3, 4, 5]);
+t.popTail();
+console.log(t);
