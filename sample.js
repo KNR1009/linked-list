@@ -1,82 +1,120 @@
 class Node {
   constructor(data) {
-    this.data = data;
+    this.prev = null;
     this.next = null;
+    this.data = data;
   }
 }
 
-class SinglyLinkedList {
+class DoublyLinkedList {
   constructor(arr) {
     this.head = new Node(arr[0]);
+
     let currentNode = this.head;
     for (let i = 1; i < arr.length; i++) {
       currentNode.next = new Node(arr[i]);
+      // 次のノードの前のノードをcurrent Nodeに割り当てます。
+      currentNode.next.prev = currentNode;
       currentNode = currentNode.next;
     }
+    // 末尾
+    this.tail = currentNode;
   }
 
-  // 先頭に受け取ったノードを追加する
-  preAppend(newNode) {
-    newNode.next = this.head;
-    this.head = newNode;
-  }
-
-  // ノードの参照
-  at(index) {
+  printList() {
     let iterator = this.head;
+    let str = "";
+    while (iterator !== null) {
+      str += iterator.data + " ";
+      iterator = iterator.next;
+    }
+    console.log(str);
+  }
 
-    // indexまでループ
+  // データ検索
+  at(index) {
+    // クラスで初期化した値
+    let iterator = this.head;
     for (let i = 0; i < index; i++) {
       iterator = iterator.next;
       if (iterator === null) return null;
     }
     return iterator;
   }
-  printList() {
-    let iterator = this.head;
-    let str = "";
 
-    // ポイントがnullになるまでループ
-    while (iterator !== null) {
-      str += iterator.data + " ";
-      iterator = iterator.next;
-    }
-    return str;
+  // 先頭に追加
+  preAppend(newNode) {
+    newNode.prev = null;
+    newNode.next = this.head;
+    this.head.prev = newNode;
+    this.head = newNode;
   }
 
-  delete(index) {
-    if (index === 0) return this.popFront();
-
-    let iterator = this.head;
-    for (let i = 0; i < index - 1; i++) {
-      if (iterator.next === null) return null;
-      iterator = iterator.next;
-    }
-    // index番のイテレーターが格納されている
-    iterator.next = iterator.next.next;
+  // 末尾に追加
+  tailAppend(newNode) {
+    newNode.prev = this.tail;
+    newNode.next = null;
+    this.tail.next = newNode;
+  }
+  // nodeの次に追加する
+  // 具体的なnodeが入ってきているので、O(1)
+  addNextNode(node, newNode) {
+    newNode.next = node.next;
+    newNode.prev = node;
+    node.next = newNode;
   }
 
-  // リストの先頭要素を削除する
+  // リストの先頭を削除
   popFront() {
     this.head = this.head.next;
+    this.head.prev = null;
+  }
+
+  // リストの末端を削除
+  popTail() {
+    this.tail = this.tail.prev;
+    this.tail.next = null;
+  }
+
+  deleteNode(node) {
+    if (node === this.tail) {
+      this.pop();
+    }
+
+    if (node === this.head) {
+      this.popFront();
+    }
+    node.prev.next = node.next;
+    node.next.prev = node.prev;
+  }
+
+  // 与えられたnodeの削除(O(1))
+
+  printInReverse() {
+    let iterator = this.tail;
+    let str = "";
+    while (iterator !== null) {
+      str += iterator.data + " ";
+      iterator = iterator.prev;
+    }
+    console.log(str);
+  }
+  reverse() {
+    let reverse = this.tail;
+    let iterator = this.tail.prev;
+    let currentNode = reverse;
+    console.log(reverse);
+
+    while (iterator !== null) {
+      currentNode.next = iterator;
+      iterator = iterator.prev;
+
+      currentNode.next.prev = currentNode;
+      currentNode = currentNode.next;
+    }
   }
 }
 
-let numList = new SinglyLinkedList([1, 2, 3, 6, 8, 10]);
-console.log(numList.printList());
-
-numList.delete(2);
-console.log(numList.printList());
-
-// numList.preAppend(new Node(20));
-
-// console.log(numList.printList());
-
-// // 2と3番目の間に40を挿入する
-// let thirdEl = numList.at(2);
-// // 2番目以降の連結リストを保存
-// let tempNode = thirdEl.next;
-// // 追加するノードをインスタンス化
-// let newNode = new Node(40);
-// newNode.next = tempNode;
-// thirdEl.next = newNode;
+const t = new DoublyLinkedList([1, 2, 3, 4, 5]);
+t.popTail();
+console.log(t);
