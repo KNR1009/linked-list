@@ -25,11 +25,23 @@ class Stack {
   }
   // 先頭のデータを読み込み
   peek() {
+    if (this.head === null) return null;
     return this.head.data;
   }
 }
 
-let s = new Stack();
-s.push(new Node(5));
-s.push(new Node(2));
-console.log(s.peek());
+// 配列を受け取って逆向きの配列を返す関数スタック
+// [1,2,3] -> [3,2,1]
+function reserve(arr) {
+  let stack = new Stack();
+  for (let i = 0; i < arr.length; i++) {
+    stack.push(arr[i]);
+  }
+  let result = [];
+
+  while (stack.peek() !== null) {
+    result.push(stack.pop());
+  }
+  return result;
+}
+console.log(reserve([1, 2, 3]));
