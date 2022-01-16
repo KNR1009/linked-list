@@ -35,10 +35,29 @@ class Queue {
       this.tail = this.tail.next;
     }
   }
+
+  dequeue() {
+    // データが空の時
+    if (this.head === null) return null;
+
+    let temp = this.head;
+
+    // データが1個の時
+    if (this.head.next === null) {
+      this.tail = null;
+      this.head = null;
+    } else {
+      this.head = this.head.next;
+    }
+    return temp.data;
+  }
 }
 
 const t = new Queue();
 t.enqueue(1);
 t.enqueue(2);
 t.enqueue(3);
+t.dequeue();
+t.dequeue();
+
 console.log(t);
