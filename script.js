@@ -12,37 +12,28 @@ class Queue {
   }
 
   peekFront() {
-    if (this.head == null) return null;
+    if (this.head === null) return null;
     return this.head.data;
   }
 
   peekBack() {
-    if (this.tail == null) return this.peekFront();
+    if (this.tail === null) return null;
     return this.tail.data;
   }
 
   enqueue(data) {
     if (this.head === null) {
+      // データが空の時
       this.head = new Node(data);
     } else if (this.tail === null) {
+      // データが1個の時
       this.tail = new Node(data);
       this.head.next = this.tail;
     } else {
+      // データが2個以上存在する時
       this.tail.next = new Node(data);
-      this.tail = new Node(data);
+      this.tail = this.tail.next;
     }
-  }
-
-  dequeue() {
-    if (this.head == null) return null;
-    let temp = this.head;
-
-    if (this.head.next == null) {
-      this.head = null;
-      this.tail = null;
-    } else this.head = this.head.next;
-
-    return temp.data;
   }
 }
 
@@ -50,7 +41,4 @@ const t = new Queue();
 t.enqueue(1);
 t.enqueue(2);
 t.enqueue(3);
-t.dequeue();
-t.dequeue();
-
 console.log(t);
