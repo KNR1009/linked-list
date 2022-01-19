@@ -74,10 +74,24 @@ class Deque {
     else this.head = null;
     return temp.data;
   }
+
+  // リストの最大値を求める
+  // 両端から挿入できる強みを生かす
+  // 反復で現在の最大値を先頭に置き、そうでなければ後ろに置く
 }
 
-let t = new Deque();
-t.enqueueFront(2);
-t.enqueueFront(3);
+function getMax(arr) {
+  let deque = new Deque();
+  // 両端に値をセット
+  deque.enqueueFront(arr[0]);
+  for (let i = 1; i < arr.length; i++) {
+    if (deque.peekFront() < arr[i]) {
+      deque.enqueueFront(arr[i]);
+    } else {
+      deque.enqueueBack(arr[i]);
+    }
+  }
+  return deque.peekFront();
+}
 
-console.log(t);
+console.log(getMax([1, 2, 3, 10, 4, 6]));
