@@ -2,10 +2,11 @@ class Node {
   constructor(data) {
     this.data = data;
     this.next = null;
+    this.prev = null;
   }
 }
 
-class Queue {
+class Deque {
   constructor() {
     this.head = null;
     this.tail = null;
@@ -17,47 +18,66 @@ class Queue {
   }
 
   peekBack() {
-    if (this.tail === null) return null;
+    if (this.tail == null) return null;
     return this.tail.data;
   }
 
-  enqueue(data) {
+  // 前側からデータの挿入
+  enqueueFront(data) {
+    // データが存在しない時
     if (this.head === null) {
-      // データが空の時
       this.head = new Node(data);
-    } else if (this.tail === null) {
-      // データが1個の時
       this.tail = new Node(data);
-      this.head.next = this.tail;
     } else {
-      // データが2個以上存在する時
-      this.tail.next = new Node(data);
-      this.tail = this.tail.next;
+      let temp = this.head;
+      let node = new Node(data);
+      this.head.prev = node;
+      node.next = temp;
+      this.head = node;
     }
   }
 
-  dequeue() {
-    // データが空の時
-    if (this.head === null) return null;
+  // 後ろ側からデータを挿入
+  enqueueBack(data) {
+    if (this.head === null) {
+      this.head = new Node(data);
+      this.tail = new Node(data);
+    } else {
+      let node = new Node(data);
+      let temp = this.tail;
+      this.tail.next = node;
+      this.tail = node;
+      this.tail.prev = temp;
+    }
+  }
+
+  // 前側から削除
+
+  dequeueFront() {
+    if (this.head == null) return null;
 
     let temp = this.head;
+    this.head = this.head.next;
+    if (this.head != null) this.head.prev = null;
+    else this.tail = null;
+    return temp.data;
+  }
 
-    // データが1個の時
-    if (this.head.next === null) {
-      this.tail = null;
-      this.head = null;
-    } else {
-      this.head = this.head.next;
-    }
+  dequeueBack() {
+    if (this.tail == null) return null;
+
+    let temp = this.tail;
+    this.tail = this.tail.prev;
+
+    //update the tail
+    if (this.tail != null) this.tail.next = null;
+    else this.head = null;
     return temp.data;
   }
 }
 
-const t = new Queue();
-t.enqueue(1);
-t.enqueue(2);
-t.enqueue(3);
-t.dequeue();
-t.dequeue();
+let t = new Deque();
+t.enqueueFront(2);
+t.enqueueFront(3);
 
 console.log(t);
